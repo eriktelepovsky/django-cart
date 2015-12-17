@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
+
 
 class Cart(models.Model):
     creation_date = models.DateTimeField(verbose_name=_('creation date'))
@@ -15,6 +15,7 @@ class Cart(models.Model):
     def __unicode__(self):
         return unicode(self.creation_date)
 
+
 class ItemManager(models.Manager):
     def get(self, *args, **kwargs):
         if 'product' in kwargs:
@@ -22,6 +23,7 @@ class ItemManager(models.Manager):
             kwargs['object_id'] = kwargs['product'].pk
             del(kwargs['product'])
         return super(ItemManager, self).get(*args, **kwargs)
+
 
 class Item(models.Model):
     cart = models.ForeignKey(Cart, verbose_name=_('cart'))
@@ -54,4 +56,3 @@ class Item(models.Model):
         self.object_id = product.pk
 
     product = property(get_product, set_product)
-

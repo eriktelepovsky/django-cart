@@ -49,6 +49,16 @@ class Cart:
             item.quantity = item.quantity + int(quantity)
             item.save()
 
+    def contains(self, product):
+        try:
+            models.Item.objects.get(
+                cart=self.cart,
+                product=product,
+            )
+            return True
+        except:
+            return False
+
     def remove(self, product):
         try:
             item = models.Item.objects.get(
